@@ -27,6 +27,6 @@
     "shelljs": "^0.7.0"
   },
   "devDependencies": {
-    "release": "github:shelljs/release"
+    "shelljs-release": "github:shelljs/release"
   }
 }
