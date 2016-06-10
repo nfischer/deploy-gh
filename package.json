@@ -1,6 +1,6 @@
 {
   "name": "deploy-gh",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple script to deploy master branch to github pages",
   "main": "index.js",
   "bin": {
