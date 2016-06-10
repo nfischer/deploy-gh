@@ -20,10 +20,10 @@ First, make sure you have an `index.html` file in the root of your repository.
 Next, inside `package.json`:
 
 ```json
-  "scripts": [
+  "scripts": {
     "test": "... whatever you normally have here ...",
     "deploy": "deploy-gh"
-  ],
+  },
 ```
 
 To run this, make sure all changes are committed on your current branch and then
