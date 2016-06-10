@@ -10,6 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "node index.js"
   },
+  "files": [
+    "index.js"
+  ],
   "keywords": [
     "github",
     "pages",
