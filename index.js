@@ -17,11 +17,26 @@ shell.exec('git rev-parse --abbrev-ref HEAD');
 shell.exec('git merge master --commit');
 shell.exec('git push origin gh-pages');
 shell.exec('git checkout -');
-var repoInfo = shell.exec('git remote show -n origin', {silent: true})
+
+// Figure out the user and project name for this repo.
+var url = shell.exec('git remote show -n origin', {silent: true})
     .grep('Push')
-    .match(/https:..github.com\/([^./]+)\/([^./]+).*/);
-if (repoInfo) {
-  shell.echo(['Deployed to https://', repoInfo[1], '.github.io/', repoInfo[2] ,'/'].join(''));
+    .replace(/^\s+Push\s+URL:\s+/, '')
+    .trim();
+var repoInfo;
+if (url.match(/^https/)) {
+  repoInfo = url.match(/https:..github.com\/([^./]+)\/([^./]+).*/);
+} else if (url.match(/^git/)) {
+  repoInfo = url.match(/git@github.com:([^/]+)\/([^.]+)\..*/);
 } else {
-  shell.echo('Unable to figure out repo name');
+  console.warn('Unknown origin pattern: "' + url + '"');
+  shell.exit(0);
+}
+
+if (repoInfo) {
+  var user = repoInfo[1];
+  var project = repoInfo[2];
+  shell.echo(['Deployed to https://', user, '.github.io/', project, '/'].join(''));
+} else {
+  console.warn('Unable to figure out repo name: ');
 }
