@@ -10,9 +10,9 @@ if (process.argv[2] === '--dryrun') {
   dryRun = true;
 }
 
-shell.exec('git checkout gh-pages');
+shell.cmd('git', 'checkout', 'gh-pages');
 if (shell.error()) {
-  shell.exec('git checkout -b gh-pages');
+  shell.cmd('git', 'checkout', '-b', 'gh-pages');
   if (shell.error()) {
     console.error('unable to checkout gh-pages branch');
     shell.exit(1);
@@ -22,7 +22,7 @@ if (shell.error()) {
 function findMainBranch() {
   var gitMainBranches = [ 'main', 'master' ];
   for (branch of gitMainBranches) {
-    var branchExists = shell.exec('git branch --list ' + branch, { silent: true }).trim() != '';
+    var branchExists = shell.cmd('git', 'branch', '--list', branch).trim() != '';
     if (branchExists) {
       return branch;
     }
@@ -32,19 +32,19 @@ function findMainBranch() {
 
 var mainBranch = findMainBranch();
 console.log('Merging ' + mainBranch + ' branch into gh-pages branch');
-shell.exec('git merge ' + findMainBranch() + ' --commit');
+shell.cmd('git', 'merge', findMainBranch(), '--commit');
 
 if (dryRun) {
   console.warn('This is a dryrun, so this is not pushing to origin!');
 } else {
   console.log('Deploying to gh-pages branch...');
-  shell.exec('git push origin gh-pages', { fatal: true });
+  shell.cmd('git', 'push', 'origin', 'gh-pages', { fatal: true });
   console.log('Your change was successfully pushed!');
 }
-shell.exec('git checkout -', { fatal: true });
+shell.cmd('git', 'checkout', '-', { fatal: true });
 
 // Figure out the user and project name for this repo.
-var url = shell.exec('git remote show -n origin', {silent: true})
+var url = shell.cmd('git', 'remote', 'show', '-n', 'origin')
     .grep('Push')
     .replace(/^\s+Push\s+URL:\s+/, '')
     .trim();

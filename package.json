@@ -24,9 +24,12 @@
   "author": "Nate Fischer <ntfschr@gmail.com> (https://github.com/nfischer)",
   "license": "MIT",
   "dependencies": {
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.9.1"
   },
   "devDependencies": {
-    "shelljs-release": "^0.5.1"
+    "shelljs-release": "^0.5.3"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
